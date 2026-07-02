@@ -14,9 +14,6 @@ public class Reservacion {
         @GeneratedValue(strategy = GenerationType.IDENTITY)
         private Long id;
 
-       // @NotBlank(message = "El nombre del cliente no puede estar vacío.")
-       // private String nombreCliente;
-
         @NotNull(message = "La fecha de ingreso es obligatoria")
         @FutureOrPresent(message = "La fecha de entrada no puede ser una fecha pasada.")
         private LocalDate fechaEntrada;
@@ -31,7 +28,7 @@ public class Reservacion {
         @NotNull(message = "La habitación asignada es obligatoria")
         private Habitacion habitacion;
 
-        @ManyToOne
+        @ManyToOne(fetch = FetchType.LAZY)
         @JoinColumn(name = "cliente_id")
         @NotNull(message = "El cliente asociado es obligatorio.")
         private Cliente cliente;

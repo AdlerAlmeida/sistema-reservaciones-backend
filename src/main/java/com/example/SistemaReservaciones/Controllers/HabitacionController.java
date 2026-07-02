@@ -4,9 +4,11 @@ import com.example.SistemaReservaciones.Dto.Habitacion;
 import com.example.SistemaReservaciones.Service.HabitacionService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @RestController
@@ -48,5 +50,15 @@ public class HabitacionController {
         }
 
         return "Error: No se pudo actualizar porque la habitacion #" + numero + " no existe.";
+    }
+
+    @GetMapping("/disponibles")
+    public ResponseEntity<List<Habitacion>> obtenerDisponibles(
+            @RequestParam("entrada") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)LocalDate fechaEntrada,
+            @RequestParam("salida")  @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)LocalDate fechaSalida
+            ){
+
+        List<Habitacion> libres = habitacionService.obtenerHabitacionDisponibles(fechaEntrada,fechaSalida);
+        return ResponseEntity.ok(libres);
     }
 }

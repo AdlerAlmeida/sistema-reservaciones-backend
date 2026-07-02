@@ -5,6 +5,8 @@ import com.example.SistemaReservaciones.Exceptions.InvalidPriceException;
 import com.example.SistemaReservaciones.Repositories.HabitacionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.time.LocalDate;
 import java.util.List;
 // 1. Le avisamos a Spring que este es nuestro Servicio (Capa de Negocio)
 @Service
@@ -45,5 +47,9 @@ public class HabitacionService {
             // Guardamos los cambios. .save() hace un UPDATE si el ID ya existe
             return habitacionRepository.save(habitacionExistente);
         }).orElse(null);
+    }
+
+    public List<Habitacion> obtenerHabitacionDisponibles(LocalDate fechaEntrada, LocalDate fechaSalida){
+       return habitacionRepository.encontrarHabitacionesLibres(fechaEntrada,fechaSalida);
     }
 }
