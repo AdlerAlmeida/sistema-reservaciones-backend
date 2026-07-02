@@ -47,11 +47,11 @@ public class ReservacionService {
 
         // 2. 🛡️ ¡EL ESCUDO DE DISPONIBILIDAD!
         // Buscamos si esa habitación ya está ocupada en ese rango de fechas
-        boolean estaOcupada = reservacionRepository.existsByHabitacionAndFechaEntradaLessThanEqualAndFechaSalidaGreaterThanEqual(
-                habitacionExistente,
-                reservacion.getFechaSalida(), // Se cruzan los parámetros para la lógica de traslape
-                reservacion.getFechaEntrada()
-        );
+       boolean estaOcupada = reservacionRepository.verificarTraslape(
+               habitacionExistente,
+               reservacion.getFechaEntrada(),
+               reservacion.getFechaSalida()
+       );
 
         if (estaOcupada) {
             // Si ya está ocupada, retornamos null para que el controlador avise del choque
