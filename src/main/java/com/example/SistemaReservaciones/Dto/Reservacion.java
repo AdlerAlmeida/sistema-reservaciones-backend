@@ -1,6 +1,7 @@
 package com.example.SistemaReservaciones.Dto;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.FutureOrPresent;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
@@ -17,6 +18,7 @@ public class Reservacion {
        // private String nombreCliente;
 
         @NotNull(message = "La fecha de ingreso es obligatoria")
+        @FutureOrPresent(message = "La fecha de entrada no puede ser una fecha pasada.")
         private LocalDate fechaEntrada;
 
         @NotNull(message = "La fecha de salida es obligatoria")
@@ -31,7 +33,7 @@ public class Reservacion {
 
         @ManyToOne
         @JoinColumn(name = "cliente_id")
-        @NotNull
+        @NotNull(message = "El cliente asociado es obligatorio.")
         private Cliente cliente;
 
 
