@@ -1,9 +1,11 @@
 package com.example.SistemaReservaciones.Dto;
 //Está teóricamente mal, las clases @Entity deben estar en una carpeta llamada Entities o Models!!!!
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 
 @Entity
 @Table(name = "clientes")
@@ -18,19 +20,25 @@ public class Cliente {
 
     @NotBlank
     @Email
-    private String email;
+    @Column(name="mail")
+    private String mail;
 
     @NotBlank
     private String telefono;
+
+    @NotBlank(message = "La contraseña es obligatoria.")
+    @Size(min = 6, message = "La contraseña debe tener más de 6 caracteres")
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    private String contrasena;
 
     public Cliente(){
 
     }
 
-    public Cliente(Long id, String nombre, String email, String telefono) {
+    public Cliente(Long id, String nombre, String mail, String telefono) {
         this.id = id;
         this.nombre = nombre;
-        this.email = email;
+        this.mail = mail;
         this.telefono = telefono;
     }
 
@@ -50,12 +58,12 @@ public class Cliente {
         this.nombre = nombre;
     }
 
-    public String getEmail() {
-        return email;
+    public String getMail() {
+        return mail;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setMail(String mail) {
+        this.mail = mail;
     }
 
     public String getTelefono() {
@@ -64,5 +72,13 @@ public class Cliente {
 
     public void setTelefono(String telefono) {
         this.telefono = telefono;
+    }
+
+    public String getContrasena() {
+        return contrasena;
+    }
+
+    public void setContrasena(String contrasena) {
+        this.contrasena = contrasena;
     }
 }
